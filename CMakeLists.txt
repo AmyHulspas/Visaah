@@ -21,6 +21,7 @@ target_include_directories(Visaah PUBLIC
 target_link_libraries(Visaah
     PUBLIC
         glfw
+        glad
         OpenGL::GL
 )
 
