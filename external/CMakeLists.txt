@@ -7,7 +7,7 @@ set(GLFW_BUILD_WAYLAND OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(glfw-3.5.1)
 
-# GLAD
+#GLAD
 add_library(glad STATIC
     glad/src/glad.c
 )
@@ -15,3 +15,6 @@ add_library(glad STATIC
 target_include_directories(glad PUBLIC
     glad/include
 )
+
+#GLM
+add_subdirectory(glm)

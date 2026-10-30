@@ -1,6 +1,10 @@
 #include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <VisaahFramework/main.h>
 
 void test() {
@@ -9,6 +13,7 @@ void test() {
         return;
     }
 
+    //Initialize and test GLFW
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -23,6 +28,7 @@ void test() {
 
     glfwMakeContextCurrent(window);
 
+    //Initialize and test GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD!\n";
         glfwDestroyWindow(window);
@@ -38,9 +44,16 @@ void test() {
     }
 
     std::cout << "GLAD initialized successfully!\n";
-    std::cout << "OpenGL version: "
-              << GLVersion.major << "."
-              << GLVersion.minor << "\n";
+    std::cout << "OpenGL version: " << GLVersion.major << "." << GLVersion.minor << "\n";
+
+    //Initialize and test GLM
+    glm::vec3 position(1.0f, 1.0f, 1.0f);
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, position);
+
+    std::cout << "GLM initialized successfully!\n";
+    std::cout << "Position: " << position.x << ", " << position.y << ", " << position.z << "\n";
 
     while (!glfwWindowShouldClose(window)) {
         glfwSwapBuffers(window);

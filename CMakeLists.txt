@@ -23,6 +23,7 @@ target_link_libraries(Visaah
         glfw
         glad
         OpenGL::GL
+        glm::glm
 )
 
 #Demo
