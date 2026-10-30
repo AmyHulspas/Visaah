@@ -24,6 +24,7 @@ target_link_libraries(Visaah
         glad
         OpenGL::GL
         glm::glm
+        imgui
 )
 
 #Demo

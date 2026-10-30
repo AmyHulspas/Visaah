@@ -18,3 +18,26 @@ target_include_directories(glad PUBLIC
 
 #GLM
 add_subdirectory(glm)
+
+
+#Dear ImGui
+add_library(imgui STATIC
+    imgui-docking/imgui.cpp
+    imgui-docking/imgui_draw.cpp
+    imgui-docking/imgui_tables.cpp
+    imgui-docking/imgui_widgets.cpp
+    imgui-docking/imgui_demo.cpp
+
+    imgui-docking/backends/imgui_impl_glfw.cpp
+    imgui-docking/backends/imgui_impl_opengl3.cpp
+)
+
+target_include_directories(imgui PUBLIC
+    imgui-docking
+    imgui-docking/backends
+)
+
+target_link_libraries(imgui PUBLIC
+    glfw
+    OpenGL::GL
+)

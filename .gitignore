@@ -1,6 +1,9 @@
 #Ignore build directory
 build
 
+#Ignore imgui configuration file
+imgui.ini
+
 #Ignore visual studio code temporary files
 .vs/
 .vscode/

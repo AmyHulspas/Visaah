@@ -5,6 +5,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include <VisaahFramework/main.h>
 
 void test() {
@@ -46,7 +50,7 @@ void test() {
     std::cout << "GLAD initialized successfully!\n";
     std::cout << "OpenGL version: " << GLVersion.major << "." << GLVersion.minor << "\n";
 
-    //Initialize and test GLM
+    //Initialize and test GLFW
     glm::vec3 position(1.0f, 1.0f, 1.0f);
 
     glm::mat4 model = glm::mat4(1.0f);
@@ -55,10 +59,47 @@ void test() {
     std::cout << "GLM initialized successfully!\n";
     std::cout << "Position: " << position.x << ", " << position.y << ", " << position.z << "\n";
 
+    //Initialize and test Dear ImGui
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    ImGui::StyleColorsDark();
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 430");
+
+    std::cout << "Dear ImGui initialized successfully!\n";
+
     while (!glfwWindowShouldClose(window)) {
-        glfwSwapBuffers(window);
         glfwPollEvents();
+
+        //Test imgui code
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        
+        ImGui::NewFrame();
+        ImGui::ShowDemoWindow();
+        ImGui::Render();
+
+        int displayWidth, displayHeight;
+        glfwGetFramebufferSize(window, &displayWidth, &displayHeight);
+
+        glViewport(0, 0, displayWidth, displayHeight);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        glfwSwapBuffers(window);
     }
+
+    //Cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     glfwDestroyWindow(window);
     glfwTerminate();
